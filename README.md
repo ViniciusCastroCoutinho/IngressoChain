@@ -61,7 +61,7 @@ Ingresso:  Válido ──fazerCheckIn────▶ Usado        (pode avaliar 
 | Item | Valor |
 |---|---|
 | Endereço | `0x11430AA58ee149215CA45A09c53f4Fc43895D1f1` |
-| Transação de deploy | `0x53d2ed3bfc0163b94b5b2a19726ca1b795b7502c9ba5fda0235738115aeacdac` |
+| Transação de deploy | `0x5934cd3d8a4714adea1d697e95934fe024aa0bc30c0449d4e1dd7e155116fd77` |
 | Bloco do deploy | `12143849` |
 | Etherscan | https://sepolia.etherscan.io/address/0x11430AA58ee149215CA45A09c53f4Fc43895D1f1 |
 | Compilador | Solidity 0.8.24, otimização desativada |
