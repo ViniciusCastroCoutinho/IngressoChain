@@ -5,8 +5,8 @@ dApp de venda de ingressos com **check-in por código**, **reembolso garantido**
 | | |
 |---|---|
 | **dApp (Vercel)** | https://ingresso-chain-front.vercel.app/ |
-| **Contrato** | `0xENDERECO_DO_CONTRATO` |
-| **Etherscan** | https://sepolia.etherscan.io/address/0xENDERECO_DO_CONTRATO |
+| **Contrato** | `0x11430AA58ee149215CA45A09c53f4Fc43895D1f1` |
+| **Etherscan** | https://sepolia.etherscan.io/address/0x11430AA58ee149215CA45A09c53f4Fc43895D1f1 |
 | **Vídeo de demonstração** | LINK_DO_VIDEO |
 | **Slides** | [docs/slides.pdf](docs/slides.pdf) |
 
@@ -60,11 +60,11 @@ Ingresso:  Válido ──fazerCheckIn────▶ Usado        (pode avaliar 
 
 | Item | Valor |
 |---|---|
-| Endereço | `0xENDERECO_DO_CONTRATO` |
-| Transação de deploy | `0xHASH_DA_TX_DE_DEPLOY` |
-| Bloco do deploy | `NUMERO_DO_BLOCO` |
-| Etherscan | https://sepolia.etherscan.io/address/0xENDERECO_DO_CONTRATO |
-| Compilador | Solidity 0.8.24 (ou superior 0.8.x), otimização desativada |
+| Endereço | `0x11430AA58ee149215CA45A09c53f4Fc43895D1f1` |
+| Transação de deploy | `0x53d2ed3bfc0163b94b5b2a19726ca1b795b7502c9ba5fda0235738115aeacdac` |
+| Bloco do deploy | `12143849` |
+| Etherscan | https://sepolia.etherscan.io/address/0x11430AA58ee149215CA45A09c53f4Fc43895D1f1 |
+| Compilador | Solidity 0.8.24, otimização desativada |
 | Código verificado | Sim (aba *Contract* no Etherscan) |
 
 ---
