@@ -22,13 +22,12 @@ Ordem: **contrato no Remix → verificação no Etherscan → `contrato.js` → 
 4. Quando aparecer em *Deployed Contracts*, anote:
    - **Endereço do contrato** (botão de copiar ao lado do nome).
    - **Hash da transação de deploy** e **número do bloco**: clique na transação no console do Remix ou abra o endereço no Etherscan.
-5. Tire prints do Remix (compilação e deploy) e salve em `docs/prints/`.
 
 ## 2. Verificar o código no Etherscan
 
 **Opção A — pelo Etherscan**
 
-1. Abra `https://sepolia.etherscan.io/address/SEU_ENDERECO` → aba **Contract** → **Verify and Publish**.
+1. Abra `[https://sepolia.etherscan.io/address/SEU_ENDERECO](https://sepolia.etherscan.io/address/0x11430AA58ee149215CA45A09c53f4Fc43895D1f1)` → aba **Contract** → **Verify and Publish**.
 2. Compiler Type: **Solidity (Single file)**; Compiler Version: **v0.8.24** (a mesma do Remix); License: **MIT**.
 3. Cole o código do contrato. Optimization: **No**. Em *Advanced*, a EVM version deve ser a mesma usada no Remix (o padrão do Remix para a 0.8.24 é **cancun**).
 4. Clique em **Verify and Publish**. A aba *Contract* passa a mostrar um ✅.
