@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IngressoChain</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/web3@4.16.0/dist/web3.min.js"></script>
+</head>
+<body>
+  <header>
+    <h1>🎟️ IngressoChain</h1>
+    <button id="btn-conectar">Conectar carteira</button>
+    <p id="info-conta"></p>
+  </header>
+
+  <!-- Aviso de rede errada -->
+  <div id="aviso-rede" class="aviso oculto">
+    A MetaMask não está na rede Sepolia.
+    <button id="btn-trocar-rede">Trocar para Sepolia</button>
+  </div>
+
+  <!-- Mensagens de sucesso e erro -->
+  <p id="status"></p>
+
+  <main>
+    <section>
+      <h2>Eventos</h2>
+      <table>
+        <thead><tr><th>ID</th><th>Nome</th><th>Preço</th><th>Vendidos</th><th>Status</th><th>Avaliação</th></tr></thead>
+        <tbody id="tabela-eventos"></tbody>
+      </table>
+
+      <h3>Comprar ingressos</h3>
+      <form id="form-comprar" class="linha">
+        <input id="compra-evento" type="number" min="0" placeholder="ID do evento" required />
+        <input id="compra-qtd" type="number" min="1" max="5" value="1" required />
+        <button type="submit">Comprar</button>
+      </form>
+    </section>
+
+    <section>
+      <h2>Meus ingressos</h2>
+      <table>
+        <thead><tr><th>ID</th><th>Evento</th><th>Status</th><th>Código (para o check-in)</th></tr></thead>
+        <tbody id="tabela-ingressos"></tbody>
+      </table>
+
+      <h3>Reembolso (evento cancelado)</h3>
+      <form id="form-reembolso" class="linha">
+        <input id="reembolso-id" type="number" min="0" placeholder="ID do ingresso" required />
+        <button type="submit">Pedir reembolso</button>
+      </form>
+
+      <h3>Avaliar (evento encerrado, após o check-in)</h3>
+      <form id="form-avaliar" class="linha">
+        <input id="avaliar-id" type="number" min="0" placeholder="ID do ingresso" required />
+        <button type="submit" data-positivo="1">👍 Gostei</button>
+        <button type="submit" data-positivo="0">👎 Não gostei</button>
+      </form>
+    </section>
+
+    <!-- Visível somente para o dono do contrato -->
+    <section id="painel-dono" class="oculto">
+      <h2>Painel do organizador</h2>
+
+      <h3>Criar evento</h3>
+      <form id="form-criar" class="linha">
+        <input id="ev-nome" placeholder="Nome" required />
+        <input id="ev-preco" type="number" step="0.0001" min="0.0001" placeholder="Preço (ETH)" required />
+        <input id="ev-capacidade" type="number" min="1" placeholder="Capacidade" required />
+        <input id="ev-data" type="datetime-local" required />
+        <button type="submit">Criar</button>
+      </form>
+
+      <h3>Check-in</h3>
+      <form id="form-checkin" class="linha">
+        <input id="checkin-codigo" placeholder="Código do ingresso (0x...)" required />
+        <button type="submit">Validar</button>
+      </form>
+
+      <h3>Gerenciar evento</h3>
+      <form id="form-gerenciar" class="linha">
+        <input id="gerenciar-id" type="number" min="0" placeholder="ID do evento" required />
+        <button type="submit" data-acao="encerrar">Encerrar</button>
+        <button type="submit" data-acao="cancelar">Cancelar</button>
+        <button type="submit" data-acao="sacar">Sacar</button>
+      </form>
+    </section>
+
+    <section>
+      <h2>Transações</h2>
+      <ul id="lista-tx"></ul>
+    </section>
+
+    <section>
+      <h2>Histórico de eventos do contrato</h2>
+      <ul id="historico"></ul>
+    </section>
+  </main>
+
+  <script src="contrato.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
