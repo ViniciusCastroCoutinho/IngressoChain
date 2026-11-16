@@ -4,7 +4,7 @@ dApp de venda de ingressos com **check-in por código**, **reembolso garantido**
 
 | | |
 |---|---|
-| **dApp (Vercel)** | https://SEU-PROJETO.vercel.app |
+| **dApp (Vercel)** | https://ingresso-chain-front.vercel.app/ |
 | **Contrato** | `0xENDERECO_DO_CONTRATO` |
 | **Etherscan** | https://sepolia.etherscan.io/address/0xENDERECO_DO_CONTRATO |
 | **Vídeo de demonstração** | LINK_DO_VIDEO |
@@ -50,10 +50,9 @@ Ingresso:  Válido ──fazerCheckIn────▶ Usado        (pode avaliar 
 
 | Integrante | Papel | Responsabilidades |
 |---|---|---|
-| NOME 1 | Desenvolvedor(a) do contrato | Modelagem, Solidity, testes no Remix, deploy e verificação |
-| NOME 2 | Desenvolvedor(a) frontend | HTML, CSS, layout responsivo |
-| NOME 3 | Integração Web3 | Web3.js, MetaMask, transações, eventos e erros |
-| NOME 4 | Documentação e QA | README, roteiro de testes, vídeo e apresentação |
+| Rubens Takashi Maruoka Vieira| Desenvolvedor(a) do contrato | Modelagem, Solidity, testes no Remix, deploy e verificação, MetaMask |
+| Matheus Takashi Maruoka Vieira | Desenvolvedor(a) frontend | Modelagem, testes no front end, MetaMask, slides |
+| Vinícius Castro Coutinho | Integração Web3 | Modelagem, testes no Remix, MetaMask, ReadMe |
 
 ---
 
@@ -129,13 +128,13 @@ Cada recurso está marcado no código com `// [Recurso: ...]`.
 
 ### 6.1 Acessar a dApp
 
-Abra **https://SEU-PROJETO.vercel.app** num navegador com a MetaMask instalada.
+Abra **https://ingresso-chain-front.vercel.app/** num navegador com a MetaMask instalada.
 
 ### 6.2 Configurar a MetaMask na Sepolia
 
 1. Instale a extensão [MetaMask](https://metamask.io) e crie uma carteira **só para testes**.
 2. Ative as redes de teste: menu de redes → *Mostrar redes de teste* → **Sepolia**.
-3. Pegue SepoliaETH em um faucet (ex.: Google Cloud Web3 Faucet ou o faucet da Alchemy).
+3. Pegue SepoliaETH em um faucet (ex.: [Sepolia PoW Faucet](https://sepolia-faucet.pk910.de/#/)).
 4. Na dApp, clique em **Conectar carteira**. Se a MetaMask estiver em outra rede, a página mostra o aviso e o botão **Trocar para Sepolia**.
 
 > ⚠️ Nunca use uma carteira com fundos reais e nunca publique a frase de recuperação ou a chave privada.
@@ -207,8 +206,6 @@ Use **duas contas** na MetaMask com SepoliaETH: **Conta A = dono** (fez o deploy
 ## 9. Declaração de uso de ferramentas de IA
 
 A equipe usou o **Claude (Anthropic)** como assistente para: discutir a modelagem do contrato a partir dos requisitos do guia, gerar uma primeira versão do contrato e do frontend, escrever testes automatizados locais e redigir esta documentação. Todo o código foi revisado, testado no Remix e na Sepolia e é compreendido pelos integrantes, que respondem por ele na arguição.
-
-*(Ajustem este texto para refletir exatamente como a equipe usou a ferramenta.)*
 
 ---
 
