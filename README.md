@@ -7,7 +7,7 @@ dApp de venda de ingressos com **check-in por código**, **reembolso garantido**
 | **dApp (Vercel)** | https://ingresso-chain-front.vercel.app/ |
 | **Contrato** | `0x11430AA58ee149215CA45A09c53f4Fc43895D1f1` |
 | **Etherscan** | https://sepolia.etherscan.io/address/0x11430AA58ee149215CA45A09c53f4Fc43895D1f1 |
-| **Vídeo de demonstração** | LINK_DO_VIDEO |
+| **Vídeo de demonstração** | https://youtu.be/QBudQ72Q7ag |
 | **Slides** | [docs/slides.pdf](docs/slides.pdf) |
 
 ---
