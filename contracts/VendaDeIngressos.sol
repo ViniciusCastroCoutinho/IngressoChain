@@ -6,7 +6,9 @@ pragma solidity ^0.8.24;
 ///         em caso de cancelamento e avaliação do evento por quem compareceu.
 /// @dev Atores: o dono (organizador) e os compradores.
 contract VendaDeIngressos {
-    /* Structs e Enums */
+    // =================================================================
+    // [Recurso: StructsEEnums]
+    // =================================================================
 
     /// Ciclo de vida de um evento.
     enum StatusEvento {
@@ -40,7 +42,9 @@ contract VendaDeIngressos {
         StatusIngresso status;
     }
 
-    /* Tipos de dados */
+    // =================================================================
+    // [Recurso: TiposDeDados]
+    // =================================================================
 
     /// @notice Organizador da plataforma, definido no deploy (immutable) e apto a receber ETH (payable).
     address payable public immutable dono;
@@ -51,7 +55,9 @@ contract VendaDeIngressos {
     /// @notice Nome exibido no frontend.
     string public constant NOME_PLATAFORMA = "IngressoChain";
 
-    /* Arrays e Mappings */
+    // =================================================================
+    // [Recurso: ArraysEMappings]
+    // =================================================================
 
     /// Array dinâmico com todos os eventos (o índice é o id do evento).
     Evento[] public eventos;
@@ -68,7 +74,9 @@ contract VendaDeIngressos {
     /// Mapping aninhado: id do evento => conta => já avaliou?
     mapping(uint256 => mapping(address => bool)) public avaliou;
 
-    /* Eventos */
+    // =================================================================
+    // [Recurso: EventosEErros]
+    // =================================================================
 
     event EventoCriado(uint256 indexed eventoId, string nome, uint256 preco, uint256 capacidade, uint256 data);
     event IngressoComprado(uint256 indexed eventoId, address indexed comprador, uint256 ingressoId, bytes32 codigo);
@@ -79,13 +87,14 @@ contract VendaDeIngressos {
     event EventoAvaliado(uint256 indexed eventoId, address indexed avaliador, bool positivo);
     event Saque(uint256 indexed eventoId, uint256 valor);
 
-    /* Erros */
     error IngressosEsgotados(uint256 disponivel, uint256 solicitado);
     error ValorIncorreto(uint256 esperado, uint256 enviado);
     error EventoNaoEncontrado(uint256 eventoId);
     error IngressoInvalido(bytes32 codigo);
 
-    /* Modifiers */
+    // =================================================================
+    // [Recurso: Modificadores]
+    // =================================================================
 
     /// Restringe a função ao organizador (controle de acesso).
     modifier apenasDono() {
@@ -105,7 +114,9 @@ contract VendaDeIngressos {
         _;
     }
 
-    /* Funções */
+    // =================================================================
+    // [Recurso: Funcoes]
+    // =================================================================
 
     /// @notice Define quem fez o deploy como dono da plataforma.
     constructor() {
@@ -123,7 +134,7 @@ contract VendaDeIngressos {
         external
         apenasDono
     {
-        // validações com require
+        // [Recurso: EstruturasDeControle] validações com require
         require(bytes(nome).length > 0, unicode"Nome obrigatório");
         require(preco > 0, unicode"Preço deve ser maior que zero");
         require(capacidade > 0, "Capacidade deve ser maior que zero");
@@ -233,7 +244,7 @@ contract VendaDeIngressos {
         evento.vendidos += quantidade;
         evento.arrecadado += msg.value;
 
-        // laço com limite controlado (no máximo MAX_POR_COMPRA voltas)
+        // [Recurso: EstruturasDeControle] laço com limite controlado (no máximo MAX_POR_COMPRA voltas)
         for (uint256 i = 0; i < quantidade; i++) {
             _emitirIngresso(eventoId, msg.sender);
         }
@@ -281,6 +292,7 @@ contract VendaDeIngressos {
 
         avaliou[eventoId][msg.sender] = true;
 
+        // [Recurso: EstruturasDeControle] if/else
         if (positivo) {
             eventos[eventoId].saldoAvaliacoes += 1;
         } else {
