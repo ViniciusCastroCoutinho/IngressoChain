@@ -48,11 +48,11 @@ Ingresso:  Válido ──fazerCheckIn────▶ Usado        (pode avaliar 
 
 ## 2. Integrantes e papéis
 
-| Integrante | Papel | Responsabilidades |
-|---|---|---|
-| Rubens Takashi Maruoka Vieira| Desenvolvedor(a) do contrato | Modelagem, Solidity, testes no Remix, deploy e verificação, MetaMask |
-| Matheus Takashi Maruoka Vieira | Desenvolvedor(a) frontend | Modelagem, testes no front end, MetaMask, slides |
-| Vinícius Castro Coutinho | Integração Web3 | Modelagem, testes no Remix, MetaMask, ReadMe |
+| Integrante | Papel |
+|---|---|
+| Rubens Takashi Maruoka Vieira| Desenvolvedor do contrato |
+| Matheus Takashi Maruoka Vieira | Desenvolvedor frontend |
+| Vinícius Castro Coutinho | Documentação e QA |
 
 ---
 
