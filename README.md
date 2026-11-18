@@ -8,7 +8,7 @@ dApp de venda de ingressos com **check-in por código**, **reembolso garantido**
 | **Contrato** | `0x11430AA58ee149215CA45A09c53f4Fc43895D1f1` |
 | **Etherscan** | https://sepolia.etherscan.io/address/0x11430AA58ee149215CA45A09c53f4Fc43895D1f1 |
 | **Vídeo de demonstração** | https://youtu.be/QBudQ72Q7ag |
-| **Slides** | [docs/IngressoChain — Apresentação.pdf](docs/IngressoChain—Apresentação.pdf) |
+| **Slides** | [docs/IngressoChain — Apresentação.pdf](<docs/IngressoChain — Apresentação.pdf>)|
 
 ---
 
