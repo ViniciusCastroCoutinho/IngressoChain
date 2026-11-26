@@ -3,101 +3,192 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#16181d" />
   <title>IngressoChain</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎟️</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
   <script src="https://cdn.jsdelivr.net/npm/web3@4.16.0/dist/web3.min.js"></script>
 </head>
 <body>
-  <header>
-    <h1>🎟️ IngressoChain</h1>
-    <button id="btn-conectar">Conectar carteira</button>
-    <p id="info-conta"></p>
+  <!-- Ícones (SVG) reutilizados pela página -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="i-copiar" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"/><path d="M16 8V4H4v12h4" fill="none" stroke="currentColor" stroke-width="2"/></symbol>
+    <symbol id="i-ok" viewBox="0 0 24 24"><path d="M4 12.5l5 5L20 6.5" fill="none" stroke="currentColor" stroke-width="2.5"/></symbol>
+    <symbol id="i-externo" viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9M18 14v6H4V6h6" fill="none" stroke="currentColor" stroke-width="2"/></symbol>
+    <symbol id="i-gostei" viewBox="0 0 24 24"><path d="M7 10v10H3V10h4zm0 0l4-7c1.7 0 2.6 1.2 2.2 2.8L12.5 9H19a2 2 0 0 1 2 2.3l-1.3 7A2 2 0 0 1 17.7 20H7" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
+    <symbol id="i-nao-gostei" viewBox="0 0 24 24"><g transform="rotate(180 12 12)"><path d="M7 10v10H3V10h4zm0 0l4-7c1.7 0 2.6 1.2 2.2 2.8L12.5 9H19a2 2 0 0 1 2 2.3l-1.3 7A2 2 0 0 1 17.7 20H7" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></g></symbol>
+    <symbol id="i-carteira" viewBox="0 0 24 24"><path d="M3 7h16v13H3zM3 7l12-4v4M15 13.5h2" fill="none" stroke="currentColor" stroke-width="2"/></symbol>
+  </svg>
+
+  <header class="topo">
+    <a class="marca" href="./"><span class="marca-icone" aria-hidden="true">🎟️</span><span>Ingresso<b>Chain</b></span></a>
+    <div class="topo-conta">
+      <div id="info-conta" class="info-conta"></div>
+      <button id="btn-conectar" class="btn btn-primario">
+        <svg class="ico" aria-hidden="true"><use href="#i-carteira"/></svg>Conectar carteira
+      </button>
+    </div>
   </header>
 
   <!-- Aviso de rede errada -->
-  <div id="aviso-rede" class="aviso oculto">
-    A MetaMask não está na rede Sepolia.
-    <button id="btn-trocar-rede">Trocar para Sepolia</button>
+  <div id="aviso-rede" class="aviso oculto" role="alert">
+    <span>A MetaMask não está na rede <b>Sepolia</b>. Os ingressos deste contrato só existem lá.</span>
+    <button id="btn-trocar-rede" class="btn btn-tinta">Trocar para Sepolia</button>
   </div>
 
   <!-- Mensagens de sucesso e erro -->
-  <p id="status"></p>
+  <div id="status" role="status" aria-live="polite"></div>
 
-  <main>
-    <section>
-      <h2>Eventos</h2>
-      <table>
-        <thead><tr><th>ID</th><th>Nome</th><th>Preço</th><th>Vendidos</th><th>Status</th><th>Avaliação</th></tr></thead>
-        <tbody id="tabela-eventos"></tbody>
-      </table>
+  <!-- Tela inicial (antes de conectar a carteira) -->
+  <section id="intro" class="intro">
+    <div class="intro-texto">
+      <h1>Seu ingresso é uma pulseira na Ethereum.</h1>
+      <p>Compre com ETH e entre no evento com um código único que só vale uma vez. Se o evento for cancelado, o reembolso sai direto do contrato, sem depender do organizador.</p>
+      <button id="btn-conectar-intro" class="btn btn-primario btn-grande">
+        <svg class="ico" aria-hidden="true"><use href="#i-carteira"/></svg>Conectar carteira
+      </button>
+      <p class="intro-nota">Rede Sepolia · MetaMask</p>
+    </div>
+    <div class="intro-pulseiras" aria-label="Exemplo dos três estados de um ingresso">
+      <div class="pulseira est-valido">
+        <div class="holo"></div>
+        <div class="pulseira-corpo">
+          <div class="pulseira-titulo">Válido</div>
+          <p class="pulseira-texto">Comprado com ETH. O código único fica com você.</p>
+        </div>
+        <div class="lacre"><b class="serial">07</b><svg class="fecho" viewBox="0 0 40 24" aria-hidden="true"><rect class="fecho-a" x="1.5" y="4" width="15" height="16" fill="none" stroke="currentColor" stroke-width="3"/><path class="fecho-b" d="M23 4h15.5v16H23M24 12h-10" fill="none" stroke="currentColor" stroke-width="3"/></svg><span>Aberto</span></div>
+      </div>
+      <div class="pulseira est-usado">
+        <div class="holo"></div>
+        <div class="pulseira-corpo">
+          <div class="pulseira-titulo">Usado</div>
+          <p class="pulseira-texto">Check-in feito na entrada. Não passa de novo.</p>
+        </div>
+        <div class="lacre"><b class="serial">03</b><svg class="fecho" viewBox="0 0 40 24" aria-hidden="true"><rect class="fecho-a" x="1.5" y="4" width="15" height="16" fill="none" stroke="currentColor" stroke-width="3"/><path class="fecho-b" d="M23 4h15.5v16H23M24 12h-10" fill="none" stroke="currentColor" stroke-width="3"/></svg><span>Fechado</span></div>
+      </div>
+      <div class="pulseira est-reembolsado">
+        <div class="holo"></div>
+        <div class="pulseira-corpo">
+          <div class="pulseira-titulo">Reembolsado</div>
+          <p class="pulseira-texto">Evento cancelado. O ETH voltou para a sua carteira.</p>
+        </div>
+        <div class="lacre"><b class="serial">05</b><svg class="fecho" viewBox="0 0 40 24" aria-hidden="true"><rect class="fecho-a" x="1.5" y="4" width="15" height="16" fill="none" stroke="currentColor" stroke-width="3"/><path class="fecho-b" d="M23 4h15.5v16H23M24 12h-10" fill="none" stroke="currentColor" stroke-width="3"/></svg><span>Devolvido</span></div>
+      </div>
+      <span class="exemplo">Exemplo</span>
+    </div>
+  </section>
 
-      <h3>Comprar ingressos</h3>
-      <form id="form-comprar" class="linha">
-        <input id="compra-evento" type="number" min="0" placeholder="ID do evento" required />
-        <input id="compra-qtd" type="number" min="1" max="5" value="1" required />
-        <button type="submit">Comprar</button>
-      </form>
-    </section>
+  <main id="app" class="oculto">
+    <div class="palco">
+      <section class="eventos" aria-labelledby="t-eventos">
+        <div class="cabeca">
+          <h2 id="t-eventos">Eventos</h2>
+          <p id="eventos-resumo" class="resumo"></p>
+        </div>
+        <div id="tabela-eventos" class="lista-eventos" role="list"></div>
 
-    <section>
-      <h2>Meus ingressos</h2>
-      <table>
-        <thead><tr><th>ID</th><th>Evento</th><th>Status</th><th>Código (para o check-in)</th></tr></thead>
-        <tbody id="tabela-ingressos"></tbody>
-      </table>
+        <form id="form-comprar" class="form-compra">
+          <h3>Comprar ingressos</h3>
+          <div id="compra-selecao" class="compra-selecao" aria-live="polite"></div>
+          <div class="campos">
+            <label class="campo">
+              <span>Evento (ID)</span>
+              <input id="compra-evento" type="number" min="0" placeholder="0" required />
+            </label>
+            <label class="campo campo-curto">
+              <span>Quantidade</span>
+              <input id="compra-qtd" type="number" min="1" max="5" value="1" required />
+            </label>
+            <button type="submit" class="btn btn-primario btn-grande">Comprar<span id="compra-total" class="btn-total"></span></button>
+          </div>
+          <p class="dica">Até 5 por compra. Clique em um evento na lista para escolher.</p>
+        </form>
 
-      <h3>Reembolso (evento cancelado)</h3>
-      <form id="form-reembolso" class="linha">
-        <input id="reembolso-id" type="number" min="0" placeholder="ID do ingresso" required />
-        <button type="submit">Pedir reembolso</button>
-      </form>
+        <section class="transacoes" aria-labelledby="t-tx">
+          <h3 id="t-tx">Transações desta sessão</h3>
+          <ul id="lista-tx" class="lista-tx"></ul>
+        </section>
+      </section>
 
-      <h3>Avaliar (evento encerrado, após o check-in)</h3>
-      <form id="form-avaliar" class="linha">
-        <input id="avaliar-id" type="number" min="0" placeholder="ID do ingresso" required />
-        <button type="submit" data-positivo="1">👍 Gostei</button>
-        <button type="submit" data-positivo="0">👎 Não gostei</button>
-      </form>
-    </section>
+      <section class="ingressos" aria-labelledby="t-ingressos">
+        <div class="cabeca">
+          <h2 id="t-ingressos">Meus ingressos</h2>
+          <p id="ingressos-resumo" class="resumo"></p>
+        </div>
+        <div id="tabela-ingressos" class="lista-pulseiras" role="list"></div>
+
+        <details class="por-id">
+          <summary>Agir pelo ID do ingresso</summary>
+          <form id="form-reembolso" class="linha">
+            <label class="campo">
+              <span>Reembolso (evento cancelado)</span>
+              <input id="reembolso-id" type="number" min="0" placeholder="ID do ingresso" required />
+            </label>
+            <button type="submit" class="btn btn-tinta">Pedir reembolso</button>
+          </form>
+          <form id="form-avaliar" class="linha">
+            <label class="campo">
+              <span>Avaliar (evento encerrado, após o check-in)</span>
+              <input id="avaliar-id" type="number" min="0" placeholder="ID do ingresso" required />
+            </label>
+            <button type="submit" class="btn btn-tinta" data-positivo="1"><svg class="ico" aria-hidden="true"><use href="#i-gostei"/></svg>Gostei</button>
+            <button type="submit" class="btn btn-contorno" data-positivo="0"><svg class="ico" aria-hidden="true"><use href="#i-nao-gostei"/></svg>Não gostei</button>
+          </form>
+        </details>
+      </section>
+    </div>
 
     <!-- Visível somente para o dono do contrato -->
-    <section id="painel-dono" class="oculto">
-      <h2>Painel do organizador</h2>
+    <section id="painel-dono" class="staff oculto" aria-labelledby="t-staff">
+      <div class="staff-cabeca">
+        <h2 id="t-staff">Painel do organizador</h2>
+        <span class="credencial">Staff</span>
+      </div>
+      <div class="staff-grade">
+        <form id="form-criar" class="staff-bloco staff-criar">
+          <h3>Criar evento</h3>
+          <label class="campo campo-largo"><span>Nome</span><input id="ev-nome" placeholder="Festival de Verão" required /></label>
+          <label class="campo"><span>Preço (ETH)</span><input id="ev-preco" type="number" step="0.0001" min="0.0001" placeholder="0.01" required /></label>
+          <label class="campo"><span>Capacidade</span><input id="ev-capacidade" type="number" min="1" placeholder="250" required /></label>
+          <label class="campo campo-largo"><span>Data</span><input id="ev-data" type="datetime-local" required /></label>
+          <button type="submit" class="btn btn-primario campo-largo">Criar evento</button>
+        </form>
 
-      <h3>Criar evento</h3>
-      <form id="form-criar" class="linha">
-        <input id="ev-nome" placeholder="Nome" required />
-        <input id="ev-preco" type="number" step="0.0001" min="0.0001" placeholder="Preço (ETH)" required />
-        <input id="ev-capacidade" type="number" min="1" placeholder="Capacidade" required />
-        <input id="ev-data" type="datetime-local" required />
-        <button type="submit">Criar</button>
-      </form>
+        <form id="form-checkin" class="staff-bloco">
+          <h3>Check-in</h3>
+          <label class="campo"><span>Código do ingresso</span><input id="checkin-codigo" class="mono" placeholder="0x… (66 caracteres)" required autocomplete="off" spellcheck="false" /></label>
+          <button type="submit" class="btn btn-primario">Validar entrada</button>
+          <p class="dica">O código só passa uma vez. Depois disso a pulseira fica fechada.</p>
+        </form>
 
-      <h3>Check-in</h3>
-      <form id="form-checkin" class="linha">
-        <input id="checkin-codigo" placeholder="Código do ingresso (0x...)" required />
-        <button type="submit">Validar</button>
-      </form>
-
-      <h3>Gerenciar evento</h3>
-      <form id="form-gerenciar" class="linha">
-        <input id="gerenciar-id" type="number" min="0" placeholder="ID do evento" required />
-        <button type="submit" data-acao="encerrar">Encerrar</button>
-        <button type="submit" data-acao="cancelar">Cancelar</button>
-        <button type="submit" data-acao="sacar">Sacar</button>
-      </form>
+        <form id="form-gerenciar" class="staff-bloco">
+          <h3>Gerenciar evento</h3>
+          <label class="campo"><span>Evento (ID)</span><input id="gerenciar-id" type="number" min="0" placeholder="0" required /></label>
+          <div class="botoes">
+            <button type="submit" class="btn btn-claro" data-acao="encerrar">Encerrar</button>
+            <button type="submit" class="btn btn-cancelar" data-acao="cancelar">Cancelar</button>
+            <button type="submit" class="btn btn-primario" data-acao="sacar">Sacar</button>
+          </div>
+          <p class="dica">Encerrar libera o saque e as avaliações. Cancelar libera os reembolsos.</p>
+        </form>
+      </div>
     </section>
 
-    <section>
-      <h2>Transações</h2>
-      <ul id="lista-tx"></ul>
-    </section>
-
-    <section>
-      <h2>Histórico de eventos do contrato</h2>
-      <ul id="historico"></ul>
-    </section>
+    <div class="registro">
+      <section aria-labelledby="t-hist">
+        <h2 id="t-hist" class="h-menor">Histórico do contrato</h2>
+        <ul id="historico" class="lista-hist"></ul>
+      </section>
+    </div>
   </main>
+
+  <footer class="rodape">
+    <span>IngressoChain · Sepolia</span>
+    <a id="link-contrato" target="_blank" rel="noopener">Contrato no Etherscan<svg class="ico" aria-hidden="true"><use href="#i-externo"/></svg></a>
+  </footer>
 
   <script src="contrato.js"></script>
   <script src="app.js"></script>
